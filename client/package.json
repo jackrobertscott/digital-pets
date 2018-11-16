@@ -2,16 +2,65 @@
   "name": "digital-pet-client",
   "version": "0.1.0",
   "private": true,
+  "main": "public/electron.js",
+  "homepage": "./",
+  "author": {
+    "name": "Jack Scott",
+    "email": "jack.rob.scott@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jackrobertscott/forge-desktop.git"
+  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "dev": "react-scripts start",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start": "concurrently \"BROWSER=none yarn run dev\" \"wait-on http://localhost:3000 && electron .\"",
+    "start:win": "concurrently \"SET BROWSER=none&&yarn run dev\" \"wait-on http://localhost:3000 && electron .\"",
+    "clean": "rm -rf build dist",
+    "ship": "yarn run clean && yarn run build:react && yarn run build:electron --mac --linux --win --publish=always",
+    "build": "yarn run clean && yarn run build:react && yarn run build:electron",
+    "build:test": "yarn run clean && yarn run build:react && yarn run build:electron --dir",
+    "build:react": "REACT_APP_NODE_ENV=production react-scripts build",
+    "build:electron": "electron-builder --config=electron-builder.yml",
+    "lint": "eslint src"
   },
   "dependencies": {
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
-    "react-scripts": "2.1.1"
+    "@sentry/browser": "^4.1.1",
+    "@sentry/electron": "^0.12.1",
+    "apollo-boost": "^0.1.16",
+    "change-case": "^3.0.2",
+    "electron-is-dev": "^0.3.0",
+    "electron-updater": "^3.2.3",
+    "formik": "^1.3.0",
+    "graphql": "^14.0.2",
+    "graphql-tag": "^2.10.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.5.2",
+    "react-apollo": "^2.2.4",
+    "react-dom": "^16.5.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "^2.0.5",
+    "styled-components": "^4.0.0",
+    "yup": "^0.26.6"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^9.0.0",
+    "babel-runtime": "^6.26.0",
+    "concurrently": "^4.0.1",
+    "electron": "^3.0.9",
+    "electron-builder": "^20.34.0",
+    "eslint": "5.6.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react": "^7.11.1",
+    "prettier": "^1.14.2",
+    "wait-on": "^3.0.1"
   },
   "eslintConfig": {
     "extends": "react-app"
