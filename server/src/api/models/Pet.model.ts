@@ -6,6 +6,11 @@ import bcrypt from 'bcrypt';
  */
 const petSchema = new mongoose.Schema(
   {
+    creatorId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
     active: {
       type: Boolean,
       required: true,
@@ -13,7 +18,6 @@ const petSchema = new mongoose.Schema(
     },
     name: {
       type: String,
-      required: true,
     },
   },
   {

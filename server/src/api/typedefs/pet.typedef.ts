@@ -5,7 +5,9 @@ export default `
     createdAt: Date!
     updatedAt: Date!
     active: Boolean!
-    name: String!
+    creatorId: String!
+    creator: User
+    name: String
   }
 
   extend type Query {
@@ -13,7 +15,7 @@ export default `
   }
 
   input PetInput {
-    name: String!
+    name: String
   }
 
   extend type Mutation {

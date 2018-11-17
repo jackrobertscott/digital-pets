@@ -1,4 +1,5 @@
 import Pet from '../models/Pet.model';
+import User from '../models/User.model';
 
 export default {
   Query: {
@@ -11,9 +12,18 @@ export default {
     },
   },
   Mutation: {
-    async petCreate(_, { data }) {
+    async petCreate(_, { data = {} }) {
       const pet: any = await Pet.create(data);
       return pet.toGraph();
+    },
+  },
+  Pet: {
+    async creator({ creatorId }) {
+      if (creatorId) {
+        const creator: any = await User.findById(creatorId);
+        return creator.toGraph();
+      }
+      return null;
     },
   },
 };
