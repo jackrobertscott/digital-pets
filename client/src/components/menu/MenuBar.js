@@ -6,7 +6,7 @@ const Wrap = styled.div`
   height: 40px;
   display: flex;
   align-items: center;
-  background-color: #ccc;
+  background-color: #fff;
   -webkit-app-region: drag;
 `;
 

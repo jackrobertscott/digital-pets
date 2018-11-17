@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import AppLayout from '../components/layout/App';
-import logo from '../assets/logo.svg';
+import AppLayout from '../../components/layout/App';
+import AuthRoutes from '../routes/AuthRoutes';
 
 export default class App extends Component {
   static propTypes = {};
@@ -10,14 +10,19 @@ export default class App extends Component {
   constructor(props, ...args) {
     super(props, ...args);
     this.state = {
-      // code...
+      user: null,
     };
   }
 
+  handleUserLogin = user => {
+    this.setState({ user });
+  };
+
   render() {
+    const { user } = this.state;
     return (
       <AppLayout>
-        <img src={logo} alt="React Logo" />
+        <AuthRoutes user={user} handleUserLogin={this.handleUserLogin} />
       </AppLayout>
     );
   }
