@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import MenuBar from '../menu/MenuBar';
 
 const Wrap = styled.div`
-  background-color: cyan;
+  padding: 20px;
 `;
 
 const AppLayout = ({ children }) => (

@@ -19,6 +19,16 @@ const petSchema = new mongoose.Schema(
     name: {
       type: String,
     },
+    hunger: {
+      type: Number,
+      required: true,
+      default: 5,
+    },
+    lastFed: {
+      type: Date,
+      required: true,
+      default: Date.now(),
+    },
   },
   {
     timestamps: true,

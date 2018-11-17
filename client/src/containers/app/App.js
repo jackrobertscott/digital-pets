@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import AppLayout from '../../components/layout/App';
 import AuthRoutes from '../routes/AuthRoutes';
-import Pet from './Pet';
+import Showcase from './Showcase';
 import auth from '../../utils/auth';
 
 export default class App extends Component {
@@ -29,7 +29,11 @@ export default class App extends Component {
     const { status } = this.state;
     return (
       <AppLayout>
-        {status ? <Pet /> : <AuthRoutes emitAuthChange={this.emitAuthChange} />}
+        {status ? (
+          <Showcase />
+        ) : (
+          <AuthRoutes emitAuthChange={this.emitAuthChange} />
+        )}
       </AppLayout>
     );
   }

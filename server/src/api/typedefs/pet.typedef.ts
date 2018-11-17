@@ -8,6 +8,8 @@ export default `
     creatorId: String!
     creator: User
     name: String
+    hunger: Int!
+    lastFed: Date!
   }
 
   extend type Query {
@@ -20,6 +22,7 @@ export default `
 
   extend type Mutation {
     petCreate(data: PetInput): Pet!
+    petFeed(petId: ID): Pet!
   }
 
 `;

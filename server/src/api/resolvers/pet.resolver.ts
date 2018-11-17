@@ -25,6 +25,13 @@ export default {
       const pet: any = await Pet.create({ ...data, creatorId: user.id });
       return pet.toGraph();
     },
+    async petFeed(_, { petId }) {
+      const pet: any = await Pet.findById(petId);
+      pet.hunger = pet.hunger >= 5 ? 5 : pet.hunger + 1;
+      pet.lastFed = Date.now();
+      await pet.save();
+      return pet.toGraph();
+    },
   },
   Pet: {
     async creator({ creatorId }) {
