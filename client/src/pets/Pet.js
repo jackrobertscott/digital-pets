@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import fetchPet from './fetchPet';
 
 import client from '../client';
 
@@ -23,7 +24,7 @@ export default class Pet {
           }
         `,
       })
-      .then(({ data: { pet } = {} }) => (pet ? Pet.fetch(pet) : null));
+      .then(({ data: { pet } = {} }) => (pet ? fetchPet(pet) : null));
   }
 
   static create() {
@@ -38,7 +39,7 @@ export default class Pet {
           }
         `,
       })
-      .then(({ data: { pet } = {} }) => (pet ? Pet.fetch(pet) : null));
+      .then(({ data: { pet } = {} }) => (pet ? fetchPet(pet) : null));
   }
 
   constructor(data = {}) {
@@ -77,6 +78,6 @@ export default class Pet {
           }
         `,
       })
-      .then(({ data: { pet } = {} }) => (pet ? Pet.fetch(pet) : null));
+      .then(({ data: { pet } = {} }) => (pet ? fetchPet(pet) : null));
   }
 }
