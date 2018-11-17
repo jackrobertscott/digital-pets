@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import gql from 'graphql-tag';
@@ -15,6 +16,10 @@ export const mutation = gql`
 `;
 
 export default class UserLoginForm extends Component {
+  static propTypes = {
+    emitAuthChange: PropTypes.func.isRequired,
+  };
+
   constructor(...args) {
     super(...args);
     this.state = {
@@ -35,6 +40,7 @@ export default class UserLoginForm extends Component {
       })
       .then(({ data: { userCreate: { userId, token } = {} } = {} }) => {
         auth.set({ userId, token });
+        this.props.emitAuthChange();
         this.setState({ success: true, loading: false });
       })
       .catch(error => {

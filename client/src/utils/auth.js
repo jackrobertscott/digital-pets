@@ -7,7 +7,7 @@ class Auth {
   get() {
     const data = localStorage.getItem('auth');
     try {
-      return JSON.parse(data);
+      return JSON.parse(data) || null;
     } catch (error) {
       localStorage.removeItem('auth');
     }

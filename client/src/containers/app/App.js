@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+
 import AppLayout from '../../components/layout/App';
 import AuthRoutes from '../routes/AuthRoutes';
+import Pet from './Pet';
+import auth from '../../utils/auth';
 
 export default class App extends Component {
   static propTypes = {};
@@ -10,19 +13,23 @@ export default class App extends Component {
   constructor(props, ...args) {
     super(props, ...args);
     this.state = {
-      user: null,
+      status: null,
     };
   }
 
-  handleUserLogin = user => {
-    this.setState({ user });
+  componentDidMount() {
+    this.setState({ status: auth.get() });
+  }
+
+  emitAuthChange = () => {
+    this.setState({ status: auth.get() });
   };
 
   render() {
-    const { user } = this.state;
+    const { status } = this.state;
     return (
       <AppLayout>
-        <AuthRoutes user={user} handleUserLogin={this.handleUserLogin} />
+        {status ? <Pet /> : <AuthRoutes emitAuthChange={this.emitAuthChange} />}
       </AppLayout>
     );
   }

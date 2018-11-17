@@ -4,15 +4,21 @@ import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import UserLoginForm from '../forms/UserLoginForm';
 import UserCreateForm from '../forms/UserCreateForm';
 
-const AuthRoutes = () => (
+const AuthRoutes = ({ ...props }) => (
   <>
     <nav>
       <Link to="/register">Register</Link>
       <Link to="/login">Login</Link>
     </nav>
     <Switch>
-      <Route path="/register" component={UserCreateForm} />
-      <Route path="/login" component={UserLoginForm} />
+      <Route
+        path="/register"
+        component={args => <UserCreateForm {...args} {...props} />}
+      />
+      <Route
+        path="/login"
+        component={args => <UserLoginForm {...args} {...props} />}
+      />
       <Redirect to="/login" />
     </Switch>
   </>
