@@ -1,3 +1,5 @@
+import { ApolloError } from 'apollo-server';
+
 import Pet from '../models/Pet.model';
 import User from '../models/User.model';
 
@@ -8,12 +10,19 @@ export default {
         creatorId: user.id,
         active: true,
       });
-      return pet.toGraph();
+      return pet ? pet.toGraph() : null;
     },
   },
   Mutation: {
-    async petCreate(_, { data = {} }) {
-      const pet: any = await Pet.create(data);
+    async petCreate(_, { data = {} }, { user }) {
+      const count = await Pet.count({
+        creatorId: user.id,
+        active: true,
+      });
+      if (count) {
+        throw new ApolloError('You already have a pet, be happy!');
+      }
+      const pet: any = await Pet.create({ ...data, creatorId: user.id });
       return pet.toGraph();
     },
   },

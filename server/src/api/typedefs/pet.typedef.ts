@@ -19,7 +19,7 @@ export default `
   }
 
   extend type Mutation {
-    petCreate(data: PetInput!): Pet!
+    petCreate(data: PetInput): Pet!
   }
 
 `;

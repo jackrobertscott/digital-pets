@@ -1,28 +1,66 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import gql from 'graphql-tag';
+
+import client from '../../client';
+import { petImage } from '../../utils/pets';
+
+const fragment = gql`
+  fragment StandardPet on Pet {
+    createdAt
+  }
+`;
+
+const query = gql`
+  ${fragment}
+  query {
+    pet: myPet {
+      ...StandardPet
+    }
+  }
+`;
+
+const mutation = gql`
+  ${fragment}
+  mutation {
+    pet: petCreate {
+      ...StandardPet
+    }
+  }
+`;
 
 export default class Pet extends Component {
-  static propTypes = {
-    item: PropTypes.any,
-  };
-
-  static defaultProps = {
-    item: null,
-  };
-
   constructor(props, ...args) {
     super(props, ...args);
     this.state = {
-      // code...
+      loaded: false,
+      pet: null,
     };
   }
 
+  componentDidMount() {
+    client.query({ query }).then(({ data: { pet } }) => {
+      this.setState({ loaded: true, pet });
+    });
+  }
+
+  createPet = () => {
+    client.mutate({ mutation }).then(({ data: { pet } }) => {
+      this.setState({ pet });
+    });
+  };
+
   render() {
-    const { item } = this.props;
+    const { loaded, pet } = this.state;
     return (
       <>
         <div>Pets!</div>
-        {JSON.stringify(item)}
+        {pet && <img src={petImage(pet)} alt="Pet" />}
+        {loaded && !pet && (
+          <button type="button" onClick={this.createPet}>
+            Create
+          </button>
+        )}
+        {JSON.stringify(pet)}
       </>
     );
   }
